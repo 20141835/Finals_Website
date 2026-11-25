@@ -1,0 +1,240 @@
+/* =====================================================
+   Common Ground – additions
+   Load AFTER styles.css (or paste at the very end of it).
+   Fills gaps: anchor offset, accessibility, mobile menu,
+   search status message, small layout fixes.
+   ===================================================== */
+
+/* ===== Anchors under the sticky header ===== */
+html {
+  scroll-padding-top: 88px; /* navbar is 68px tall + breathing room */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ===== Accessibility ===== */
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 200;
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+:focus-visible {
+  outline: 3px solid #5aa5bd;
+  outline-offset: 3px;
+}
+
+/* Inputs already show a border change on focus; keep the ring subtle there */
+.care-input-wrapper input:focus-visible,
+.care-input-wrapper select:focus-visible {
+  outline-offset: 1px;
+}
+
+/* ===== Small component gaps ===== */
+.care-chevron {
+  font-size: 0.9em;
+  line-height: 1;
+  margin-left: 2px;
+  position: relative;
+  top: -2px;
+}
+
+.care-filter-btn.is-active {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.care-meta-bar {
+  flex-wrap: wrap;
+  gap: 6px 24px;
+}
+
+/* Status message shown after pressing "Search services" */
+.care-status {
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: -12px 0 28px;
+}
+
+.care-status[hidden] {
+  display: none;
+}
+
+/* Let grid children shrink instead of overflowing on small screens */
+.forum-feed-col,
+.groups-list-col {
+  min-width: 0;
+}
+
+/* Real photos can replace the two gradient placeholders */
+.hero-image-placeholder,
+.groups-photo-placeholder {
+  overflow: hidden;
+}
+
+.hero-image-placeholder img,
+.groups-photo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== Mobile navigation ===== */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.nav-toggle-bars {
+  position: relative;
+}
+
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.nav-toggle-bars::before {
+  top: -6px;
+}
+
+.nav-toggle-bars::after {
+  top: 6px;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars {
+  background: transparent;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.nav-mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav-container {
+    gap: 12px;
+  }
+
+  /* Dropdown panel under the header */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 6px 28px 14px;
+  }
+
+  .navbar.nav-open .nav-links {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 1rem;
+  }
+
+  .nav-links a:last-child {
+    border-bottom: 0;
+  }
+
+  .nav-mobile-only {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .sign-in-link {
+    display: none; /* available inside the mobile menu instead */
+  }
+
+  .nav-actions {
+    gap: 10px;
+  }
+
+  .nav-actions .btn {
+    display: none; /* "Join the community" lives in the mobile menu instead */
+  }
+
+  .brand {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .nav-links {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+.brand,
+.nav-actions .btn {
+  white-space: nowrap;
+}
